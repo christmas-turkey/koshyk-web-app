@@ -1,27 +1,7 @@
-from fastapi import FastAPI
-from src.services.products import (
-    get_all_products,
-    get_product_by_id,
-    search_products,
-    get_product_categories,
-    get_products_by_category
-)
+import requests
 
 
-app = FastAPI()
-
-
-@app.get("/healthcheck")
-def healthcheck():
-    """
-    Check if the server is up and running
-    """
-
-    return {"description": "Server is up and running"}
-
-
-@app.get("/api/get_all_products")
-def get_all_products_route(
+def get_all_products(
     limit: int = 0,
     sort_by: str = "title",
     sort_order: str = "asc",
@@ -38,11 +18,10 @@ def get_all_products_route(
         JSON: The products retrieved from the dummyjson API
     """
 
-    products = get_all_products(limit, sort_by, sort_order)
-    return products
+    response = requests.get(f"https://dummyjson.com/products?limit={limit}&sortBy={sort_by}&order={sort_order}")
+    return response.json()
 
-@app.get("/api/products/{product_id}")
-def get_product_by_id_route(
+def get_product_by_id(
     product_id: int,
 ):
     """
@@ -55,11 +34,10 @@ def get_product_by_id_route(
         JSON: The product retrieved from the dummyjson API
     """
 
-    product = get_product_by_id(product_id)
-    return product
+    response = requests.get(f"https://dummyjson.com/products/{product_id}")
+    return response.json()
 
-@app.get("/api/search_products")
-def search_products_route(
+def search_products(
     query: str,
     limit: int = 0,
     sort_by: str = "title",
@@ -78,33 +56,31 @@ def search_products_route(
         JSON: The products retrieved from the dummyjson API
     """
 
-    products = search_products(query, limit, sort_by, sort_order)
-    return products
+    response = requests.get(f"https://dummyjson.com/products/search?q={query}&limit={limit}&sortBy={sort_by}&order={sort_order}")
+    return response.json()
 
-@app.get("/api/get_product_categories")
-def get_product_categories_route():
+def get_product_categories():
     """
-    Retrieve all product categories from the dummyjson API
+    Retrieve all product category names from the dummyjson API
 
     Returns:
         JSON: The product categories retrieved from the dummyjson API
     """
 
-    categories = get_product_categories()
-    return categories
+    response = requests.get("https://dummyjson.com/products/categories")
+    return response.json()
 
-@app.get("/api/products/category/{category}")
-def get_products_by_category_route(
-    category: str,
+def get_products_by_category(
+    category_name: str,
     limit: int = 0,
     sort_by: str = "title",
     sort_order: str = "asc",
 ):
     """
-    Retrieve all products in a category from the dummyjson API
+    Retrieve all products by category name from the dummyjson API
 
     Args:
-        category (str): The category to retrieve products from
+        category_name (str): The name of the category to retrieve products from
         limit (int): The number of products to retrieve. Default is 0, which retrieves all products
         sort_by (str): The field to sort by. Default is "title"
         sort_order (str): The order to sort by. Default is "asc"
@@ -113,5 +89,5 @@ def get_products_by_category_route(
         JSON: The products retrieved from the dummyjson API
     """
 
-    products = get_products_by_category(category, limit, sort_by, sort_order)
-    return products
+    response = requests.get(f"https://dummyjson.com/products/category/{category_name}?limit={limit}&sortBy={sort_by}&order={sort_order}")
+    return response.json()
