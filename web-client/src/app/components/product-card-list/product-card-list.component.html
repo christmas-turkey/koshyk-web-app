@@ -1,0 +1,14 @@
+<div class="product-card-list">
+    <app-product-card 
+      *ngFor="let product of products" 
+      [product]="product">
+    </app-product-card>
+</div>
+<div class="load-more" *ngIf="!isLoading">
+    <button (click)="onLoadMoreProducts()">
+      Load More +
+    </button>
+</div>
+<div class="products-loading" *ngIf="isLoading">
+  <span class="products-loading__spinner"></span>
+</div>

@@ -1,0 +1,9 @@
+<app-product-categories 
+    [categories]="categories"
+    (categoryEmitter)="onSelectCategory($event)">
+</app-product-categories>
+<app-product-card-list 
+    [products]="products"
+    [isLoading]="isLoading"
+    (loadMoreEmitter)="loadMoreProducts()">
+</app-product-card-list>

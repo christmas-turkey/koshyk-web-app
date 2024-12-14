@@ -1,0 +1,58 @@
+@import '../../../assets//styles//colors';
+
+.product-card-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 16px;
+    justify-content: center;
+
+    > * {
+        align-self: center;
+        justify-self: center;
+    }
+
+    @media (max-width: 1200px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    @media (max-width: 1000px) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.load-more {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    button {
+        cursor: pointer;
+        background: none;
+        border: none;
+        outline: none;
+        color: $lightgreen;
+        font-size: 1.5rem;
+        color: $forestgreen;
+    }
+}
+
+.products-loading {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    &__spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid $lightgreen;
+        border-top-color: $forestgreen;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    }
+}

@@ -1,0 +1,47 @@
+@import '../../../assets//styles//colors';
+
+.categories {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: fit-content;
+  gap: 12px;
+  margin: 12px 0;
+  padding: 8px 0;
+
+  button {
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: $darkgrey;
+    background-color: $lightgrey;
+    transition: all 0.3s ease;
+
+    &.selected {
+      background-color: $lightgreen;
+      color: #fff;
+
+      &:hover {
+        background: darken($color: $lightgreen, $amount: 10)
+      }
+  
+      &:active {
+        background: darken($color: $lightgreen, $amount: 20)
+      }
+    }
+
+    &:hover {
+      background: darken($color: $lightgrey, $amount: 10)
+    }
+
+    &:active {
+      background: darken($color: $lightgrey, $amount: 20)
+    }
+  }
+}
+

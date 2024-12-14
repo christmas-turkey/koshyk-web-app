@@ -1,0 +1,21 @@
+@import './assets/styles/colors';
+@import './assets/styles/fonts';
+
+* {
+    box-sizing: border-box;
+    font-family: $main-font;
+    margin: 0;
+    padding: 0;
+}
+
+.app-container {
+    max-width: 1300px; /* Sets a maximum width for the app */
+    margin: 0 auto; /* Centers the app on the page */
+    padding: 0 16px; /* Adds some padding to the sides */
+    box-sizing: border-box; /* Ensures padding is included in width */
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}

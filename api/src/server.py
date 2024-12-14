@@ -1,15 +1,21 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from src.services.products import (
     get_all_products,
-    get_product_by_id,
-    search_products,
-    get_product_categories,
-    get_products_by_category
+    get_products_by_category,
+    get_categories,
 )
 
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/healthcheck")
 def healthcheck():
@@ -20,98 +26,62 @@ def healthcheck():
     return {"description": "Server is up and running"}
 
 
-@app.get("/api/get_all_products")
+@app.get("/api/products")
 def get_all_products_route(
-    limit: int = 0,
+    limit: int = 20,
+    skip: int = 0,
     sort_by: str = "title",
     sort_order: str = "asc",
 ):
     """
-    Retrieve all products from the dummyjson API
+    Retrieve products from the Database.
 
-    Args:
-        limit (int): The number of products to retrieve. Default is 0, which retrieves all products
-        sort_by (str): The field to sort by. Default is "title"
-        sort_order (str): The order to sort by. Default is "asc"
+    Query params:
+        limit (int, optional): The number of products to retrieve.
+        skip (int, optional): The number of products to skip.
+        sort_by (str, optional): The field to sort the products by.
+        sort_order (str, optional): The order to sort the products by.
     
     Returns:
-        JSON: The products retrieved from the dummyjson API
+        JSON: The products retrieved from the Database.
     """
 
-    products = get_all_products(limit, sort_by, sort_order)
-    return products
+    response = get_all_products(limit, skip, sort_by, sort_order)
+    return response
 
-@app.get("/api/products/{product_id}")
-def get_product_by_id_route(
-    product_id: int,
-):
-    """
-    Retrieve a product by its ID from the dummyjson API
-
-    Args:
-        product_id (int): The ID of the product to retrieve
-    
-    Returns:
-        JSON: The product retrieved from the dummyjson API
-    """
-
-    product = get_product_by_id(product_id)
-    return product
-
-@app.get("/api/search_products")
-def search_products_route(
-    query: str,
-    limit: int = 0,
-    sort_by: str = "title",
-    sort_order: str = "asc",
-):
-    """
-    Search for products by a query from the dummyjson API
-
-    Args:
-        query (str): The query to search for
-        limit (int): The number of products to retrieve. Default is 0, which retrieves all products
-        sort_by (str): The field to sort by. Default is "title"
-        sort_order (str): The order to sort by. Default is "asc"
-    
-    Returns:
-        JSON: The products retrieved from the dummyjson API
-    """
-
-    products = search_products(query, limit, sort_by, sort_order)
-    return products
-
-@app.get("/api/get_product_categories")
-def get_product_categories_route():
-    """
-    Retrieve all product categories from the dummyjson API
-
-    Returns:
-        JSON: The product categories retrieved from the dummyjson API
-    """
-
-    categories = get_product_categories()
-    return categories
-
-@app.get("/api/products/category/{category}")
+@app.get("/api/products/{category}")
 def get_products_by_category_route(
     category: str,
-    limit: int = 0,
+    limit: int = 20,
+    skip: int = 0,
     sort_by: str = "title",
     sort_order: str = "asc",
 ):
     """
-    Retrieve all products in a category from the dummyjson API
+    Retrieve products by category from the Database.
 
     Args:
-        category (str): The category to retrieve products from
-        limit (int): The number of products to retrieve. Default is 0, which retrieves all products
-        sort_by (str): The field to sort by. Default is "title"
-        sort_order (str): The order to sort by. Default is "asc"
+        category (str): The category to filter the products by.
+        limit (int, optional): The number of products to retrieve.
+        skip (int, optional): The number of products to skip.
+        sort_by (str, optional): The field to sort the products by.
+        sort_order (str, optional): The order to sort the products by.
     
     Returns:
-        JSON: The products retrieved from the dummyjson API
+        JSON: The products retrieved from the Database.
     """
 
-    products = get_products_by_category(category, limit, sort_by, sort_order)
-    return products
+    response = get_products_by_category(category, limit, skip, sort_by, sort_order)
+    return response
+
+@app.get("/api/categories")
+def get_categories_route():
+    """
+    Retrieve all the categories from the Database.
+
+    Returns:
+        JSON: The categories retrieved from the Database.
+    """
+
+    response = get_categories()
+    return response

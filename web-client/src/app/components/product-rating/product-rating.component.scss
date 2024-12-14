@@ -1,0 +1,27 @@
+.product-rating {
+    .rating-star {
+      position: relative;
+      font-size: 1.5rem;
+      color: #ddd;
+      display: inline-block;
+      
+      &.filled {
+        color: gold;
+      }
+      
+      &.half-filled {
+        position: relative;
+        
+        &::before {
+          content: '★';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 60%;
+          overflow: hidden;
+          color: gold;
+          z-index: 1;
+        }
+      }
+    }
+  }

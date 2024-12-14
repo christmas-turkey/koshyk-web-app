@@ -1,0 +1,22 @@
+<div class="product-card">
+    <img [src]="product.thumbnail" [alt]="product.title" class="product-card__thumbnail" />
+    <div class="product-card__details">
+      <p class="product-card__stock" [ngClass]="{ 'in-stock': product.stock > 0, 'out-of-stock': product.stock === 0 }">
+        {{ product.stock > 0 ? 'In Stock' : 'Out of Stock' }}
+      </p>
+      <h2 class="product-card__title">{{ product.title }}</h2>
+      <p class="product-card__price">
+        <b>${{ product.price | number:'1.2-2' }}</b>
+        <b *ngIf="product.discountPercentage > 0" class="product-card__discount">
+          ({{ product.discountPercentage }}% off)
+        </b>
+      </p>
+      <p class="product-card__brand">Brand: {{ product.brand || 'Not specified' }}</p>
+      <app-product-rating [rating]="product.rating"></app-product-rating>
+    </div>
+    <ul class="product-card__tags">
+      <li *ngFor="let tag of product.tags">{{ tag }}</li>
+    </ul>
+    <button class="product-card__cart-btn" [disabled]="product.stock === 0">Add to Cart</button>
+</div>
+  

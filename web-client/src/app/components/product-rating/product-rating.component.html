@@ -1,0 +1,13 @@
+<div class="product-rating">
+    <ng-container *ngFor="let star of [].constructor(5); let i = index">
+      <i 
+        class="rating-star"
+        [ngClass]="{
+          'filled': i + 1 <= rating,
+          'half-filled': i < rating && i + 1 > rating
+        }"
+      >
+        ★
+      </i>
+    </ng-container>
+</div>
